@@ -1,0 +1,164 @@
+package com.mycompany.studentmanagementsystem;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentManagementSystem {
+
+    static ArrayList<Student> students = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+            System.out.println("\n===== STUDENT MANAGEMENT SYSTEM =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. View All Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Delete Student");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    addStudent();
+                    break;
+
+                case 2:
+                    viewStudents();
+                    break;
+
+                case 3:
+                    searchStudent();
+                    break;
+
+                case 4:
+                    deleteStudent();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using Student Management System!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 5);
+    }
+
+    // Add Student
+    static void addStudent() {
+
+        System.out.print("Enter Student ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Course: ");
+        String course = sc.nextLine();
+
+        System.out.print("Enter Semester: ");
+        int semester = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = sc.nextLine();
+
+        Student student = new Student(id, name, course, semester, email);
+
+        students.add(student);
+
+        System.out.println("Student added successfully!");
+    }
+
+    // View Students
+    static void viewStudents() {
+
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+            return;
+        }
+
+        System.out.println("\n===== STUDENT LIST =====");
+
+        for (Student s : students) {
+            s.displayStudent();
+        }
+    }
+
+    // Search Student
+    static void searchStudent() {
+
+        System.out.print("Enter Student ID to search: ");
+        int id = sc.nextInt();
+
+        for (Student s : students) {
+
+            if (s.studentId == id) {
+                System.out.println("\nStudent Found!");
+                s.displayStudent();
+                return;
+            }
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Delete Student
+    static void deleteStudent() {
+
+        System.out.print("Enter Student ID to delete: ");
+        int id = sc.nextInt();
+
+        for (Student s : students) {
+
+            if (s.studentId == id) {
+                students.remove(s);
+                System.out.println("Student deleted successfully!");
+                return;
+            }
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Student Class
+    static class Student {
+
+        int studentId;
+        String name;
+        String course;
+        int semester;
+        String email;
+
+        Student(int studentId, String name, String course,
+                int semester, String email) {
+
+            this.studentId = studentId;
+            this.name = name;
+            this.course = course;
+            this.semester = semester;
+            this.email = email;
+        }
+
+        void displayStudent() {
+
+            System.out.println("----------------------------");
+            System.out.println("Student ID : " + studentId);
+            System.out.println("Name       : " + name);
+            System.out.println("Course     : " + course);
+            System.out.println("Semester   : " + semester);
+            System.out.println("Email      : " + email);
+            System.out.println("----------------------------");
+        }
+    }
+}
